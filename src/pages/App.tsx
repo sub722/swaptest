@@ -19,16 +19,29 @@ import { EN, allLanguages } from '../constants/localisation/languageCodes'
 import { LanguageContext } from '../hooks/LanguageContext'
 import { TranslationsContext } from '../hooks/TranslationsContext'
 import UseV2ExchangeModal from '../components/UseV2ExchangeModal'
-
+import Background3D from '../components/BackgroundThreeD'
 import Menu from '../components/Menu'
 import useGetDocumentTitlePrice from '../hooks/useGetDocumentTitlePrice'
 
 const AppWrapper = styled.div`
   display: flex;
-  flex-flow: column;
+  justify-content:center;
+  align-items:center;
+  flex-w: column;
   align-items: flex-start;
   overflow-x: hidden;
 `
+const BackgroundLayer = styled.div`
+  display:block;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color:red;
+`
+
+
 
 const BodyWrapper = styled.div`
   overflow-y: auto;
@@ -128,7 +141,9 @@ export default function App() {
             }}
           >
             <TranslationsContext.Provider value={{ translations, setTranslations }}>
-              <Menu>
+              <BackgroundLayer >
+                <Background3D />
+                </BackgroundLayer>
                 <BodyWrapper>
                   <Popups />
                   <Web3ReactManager>
@@ -149,8 +164,6 @@ export default function App() {
                     </Switch>
                   </Web3ReactManager>
                 </BodyWrapper>
-              </Menu>
-              <VersionBar />
             </TranslationsContext.Provider>
           </LanguageContext.Provider>
         </AppWrapper>
