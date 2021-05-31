@@ -13,7 +13,7 @@ function MoonHigh (props: JSX.IntrinsicElements['mesh'], loadHandler) {
 	const [isLoaded, setLoaded] = useState(false);
 	const [ colorMap, normalMap ] = useLoader(TextureLoader, [
 		'moon/maps/moon_4k_color_brim16.jpg',
-		'moon/maps/moon_8k_normal.jpg'
+		'moon/maps/moon_4k_normal.jpg'
 	])
 
 	useEffect(()=>{
