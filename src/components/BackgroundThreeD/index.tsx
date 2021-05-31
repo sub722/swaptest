@@ -4,33 +4,81 @@ import styled from 'styled-components'
 import { Canvas, useFrame, useLoader} from '@react-three/fiber'
 import { PerspectiveCamera } from '@react-three/drei'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
+import { group } from 'console'
 
-function Box (props: JSX.IntrinsicElements['mesh']) {
+
+const LoadTextures=()=>{
+
+	
+
+}
+
+
+function Moon (props: JSX.IntrinsicElements['mesh']) {
 	const mesh = useRef<THREE.Mesh>(null!)
-	const [ hovered, setHover ] = useState(false)
-	const [ active, setActive ] = useState(false)
-	// const [matcap1, matcap2] = useTexture([`${process.env.PUBLIC_URL}/images/moon/maps/`, `${process.env.PUBLIC_URL}/images/moon/maps/moon_8k_normal`])
-	// const [matcap1, matcap2] = useTexture([moonDiffuse,moonNormal])
+	const moongroup= useRef<THREE.Group>(null!)
+	const [textureSize,setTextureSize]=useState(0)
+	const [textures,setTexture]=useState()
+	
+	
+	const [  colorMap,normalMap ] = useLoader(TextureLoader, [
+		'moon/maps/moon1024x512.jpg',
+		'moon/maps/normal1024x512.jpg'
+	])
+	useEffect(() => {
+		console.log('normal loaded')
+		setTextureSize(1)
+		
+		
 
-	const [ colorMap, normalMap ] = useLoader(TextureLoader, [
+	}
+	, [colorMap])
+	const [ colorMap8k, normalMap8k ] = useLoader(TextureLoader, [
 		'moon/maps/moon_8k_color_brim16.jpg',
 		'moon/maps/moon_8k_normal.jpg'
 	])
+	
+	useEffect(() => {
+		console.log('8k loaded')
+		setTextureSize(2)
+
+}, [colorMap8k])
 
 	/* eslint-disable */
 
 	useFrame((state, delta) => {
 		mesh.current.rotation.y += 0.0004
+		moongroup.current.rotation.y+=0.01
 	//	mesh.current.rotation.y += 0.0004
 	})
+	const MaterialMoon=()=>
+	{
+		if (textureSize===1)
+		{
+			return <meshStandardMaterial map={colorMap} normalMap={normalMap} />
+		}
+		if(textureSize===2)
+		{
+			return <meshStandardMaterial map={colorMap} normalMap={normalMap} />
+			// return <meshStandardMaterial map={colorMap8k} normalMap={normalMap8k} />
+		}
+		return  <meshStandardMaterial color='grey' />
+	}
+	
 	return (
+		<group ref={moongroup} position={[0,0,-50]} >
 		<mesh
 			{...props}
 			ref={mesh}
+			position={[15,0,-10]}
+			
+			
 		>
-			<icosahedronGeometry args={[ 3, 20 ]} />
-			<meshStandardMaterial map={colorMap} normalMap={normalMap} />
+			<icosahedronGeometry args={[ 4, 20 ]} />
+			
+			<MaterialMoon />
 		</mesh>
+		</group>
 	)
 }
 
@@ -45,10 +93,11 @@ function GroupLight (props: JSX.IntrinsicElements['group']) {
 	})
 
 	return (
-    <group position={[1.2, -4, 4]} ref={grouplight}>
+    
+		<group position={[1.2, -4, 4]} ref={grouplight}>
           <mesh position={[0,-10 , 0 ]}>
 			      <sphereGeometry args={[ 1, 50,50 ]} />
-			      <meshBasicMaterial color={'red'} />
+			      <meshBasicMaterial color={'black'} />
 		    </mesh>
 			  <pointLight position={[ 0, 10, 10 ]} intensity={0.4} ref={light} />
     </group>
@@ -70,18 +119,20 @@ export default function Nav () {
 		<Canvas style={{ width: '100%', height: '100%' }}>
 			<PerspectiveCamera
 				makeDefault
-				position={[ 0, -3, 10 ]}
+				position={[ 0, 0, 10 ]}
 				fov={35}
 				aspect={window.innerWidth / window.innerHeight}
 				near={1}
 				far={65536}
 			/>
 			<color attach='background' args={[ 'black' ]} />
-			<Suspense fallback={null}>
-				<Box position={[ 1.2, -4, 4 ]} />
+			
+				<group>
+					<Moon />
+				</group>
         
-			</Suspense>
-			<ambientLight intensity={0.034} />
+			
+			<ambientLight intensity={0.015} />
       <GroupLight />
 		</Canvas>
 	)
