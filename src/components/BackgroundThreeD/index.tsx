@@ -7,12 +7,6 @@ import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import { group } from 'console'
 
 
-const LoadTextures=()=>{
-
-	
-
-}
-
 
 function Moon (props: JSX.IntrinsicElements['mesh']) {
 	const mesh = useRef<THREE.Mesh>(null!)
