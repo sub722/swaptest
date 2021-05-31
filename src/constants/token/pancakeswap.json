@@ -19,6 +19,14 @@
       "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c.png"
     },
     {
+      "name": "MoonRabbit Token",
+      "symbol": "MOONRABBIT",
+      "address": "0x5Ac69C40bc7363EA7D98574C78F4f54DbecbD54B",
+      "chainId": 56,
+      "decimals": 18,
+      "logoURI": "  https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/smartchain/assets/0x5Ac69C40bc7363EA7D98574C78F4f54DbecbD54B/logo.png"
+    },
+    {
       "name": "Bakery Token",
       "symbol": "BAKE",
       "address": "0xe02df9e3e622debdd69fb838bb799e3f168902c5",

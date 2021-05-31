@@ -7,14 +7,17 @@ const Card = styled.div<any>`
   padding: ${({ padding }) => padding};
   border: ${({ border }) => border};
   border-radius: ${({ borderRadius }) => borderRadius};
+  
+
 `
 export default Card
 
 export const LightCard = styled(Card)`
   border: 1px solid ${({ theme }) => theme.colors.invertedContrast};
-  background-color: ${({ theme }) => theme.colors.invertedContrast};
 `
+
 
 export const GreyCard = styled(Card)`
   background-color: ${({ theme }) => theme.colors.tertiary};
+  
 `

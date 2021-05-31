@@ -60,7 +60,7 @@ const Swap = () => {
     useCurrency(loadedUrlParams?.inputCurrencyId),
     useCurrency(loadedUrlParams?.outputCurrencyId),
   ]
-  const [dismissTokenWarning, setDismissTokenWarning] = useState<boolean>(false)
+  const [dismissTokenWarning, setDismissTokenWarning] = useState<boolean>(true)
   const [transactionWarning, setTransactionWarning] = useState<{
     selectedToken: string | null
     purchaseType: string | null
@@ -211,7 +211,7 @@ const Swap = () => {
   const [approval, approveCallback] = useApproveCallbackFromTrade(trade, allowedSlippage)
 
   // check if user has gone through approval process, used to show two step buttons, reset on token change
-  const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
+  const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(true)
 
   // mark when a user has submitted an approval, reset onTokenSelection for input field
   useEffect(() => {
@@ -352,7 +352,7 @@ const Swap = () => {
         onConfirm={handleConfirmWarning}
       />
       <SafeMoonWarningModal isOpen={transactionWarning.selectedToken === 'SAFEMOON'} onConfirm={handleConfirmWarning} />
-      <CardNav />
+      
       <AppBody>
         <Wrapper id="swap-page">
           <ConfirmSwapModal

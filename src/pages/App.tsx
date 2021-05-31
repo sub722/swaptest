@@ -29,7 +29,9 @@ const AppWrapper = styled.div`
   align-items:center;
   flex-w: column;
   align-items: flex-start;
-  overflow-x: hidden;
+  overflow: hidden;
+    
+  
 `
 const BackgroundLayer = styled.div`
   display:block;
@@ -38,7 +40,7 @@ const BackgroundLayer = styled.div`
   left:0;
   width:100%;
   height:100%;
-  background-color:red;
+  background:url('/images/bgSky.jpg')
 `
 
 
@@ -47,9 +49,9 @@ const BodyWrapper = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 1;
-  margin-bottom: 64px;
+  
   ${({ theme }) => theme.mediaQueries.lg} {
-    margin-bottom: 0;
+    // margin-bottom: 0;
   }
 `
 
@@ -68,7 +70,7 @@ export default function App() {
 
   const stringTranslationsApi = new StringTranslations(credentials)
 
-  const [hasSeenModal, setHasSeenModal] = useState(false)
+  const [hasSeenModal, setHasSeenModal] = useState(true)
   const [onPresentUseV2ExchangeModal] = useModal(<UseV2ExchangeModal />)
 
   useEffect(() => {
