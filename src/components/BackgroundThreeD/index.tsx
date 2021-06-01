@@ -1,19 +1,27 @@
 import * as THREE from 'three'
-import React, { useState, useRef, useEffect, Suspense } from 'react'
-import styled from 'styled-components'
+import React, { useState, useRef, useEffect, Suspense,useMemo	 } from 'react'
+
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
-import { PerspectiveCamera,Stars } from '@react-three/drei'
+import { PerspectiveCamera,Stars,OrbitControls,Text } from '@react-three/drei'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
-import { useSpring, animated } from '@react-spring/three'
-import config from 'pages/Migration/config'
+
+import data from '@compai/font-inter/data/typefaces/normal-800.json'
+
+const font = new THREE.FontLoader().parse(data)
+
+
 
 
 function MoonHigh (props: JSX.IntrinsicElements['mesh'], loadHandler) {
+	const myMesh = useRef<THREE.Mesh>(null!)
+	const myMaterial = useRef<THREE.MeshStandardMaterial>(null!)
 	const [active, setActive] = useState(false);
 	const [isLoaded, setLoaded] = useState(false);
-	const [ colorMap, normalMap ] = useLoader(TextureLoader, [
+	const [ colorMap, normalMap,emisiveMap ] = useLoader(TextureLoader, [
 		'moon/maps/moon_4k_color_brim16.jpg',
-		'moon/maps/moon_4k_normal.jpg'
+		'moon/maps/moon_4k_normal.jpg',
+		'moon/maps/moon_4k_emisive.png'
+
 	])
 
 	useEffect(()=>{
@@ -22,17 +30,19 @@ function MoonHigh (props: JSX.IntrinsicElements['mesh'], loadHandler) {
 
 
 	
-	const springs = useSpring({ scale: active ? 1.5 : 1 })
 
-	const myMesh = useRef<THREE.Mesh>(null!)
+	
   
 	useFrame((state, delta) => {
+		const time = state.clock.getElapsedTime()
+		const inicolor=new THREE.Color(0xffcea5)
 		if(isLoaded)
 		{
 			if(myMesh.current.position.y<0)
 			{
 				myMesh.current.position.y += 0.01
 			}
+			 myMaterial.current.emissive.set(inicolor.multiplyScalar(Math.sin(time/2)))
 		}
 		
 		//	mesh.current.rotation.y += 0.0004
@@ -47,7 +57,7 @@ function MoonHigh (props: JSX.IntrinsicElements['mesh'], loadHandler) {
 			
 			<mesh  ref={myMesh} position={[0,-5,0]}>
 			<icosahedronGeometry args={[ 4, 20 ]} />
-			<meshStandardMaterial map={colorMap} normalMap={normalMap} />
+			<meshStandardMaterial map={colorMap} normalMap={normalMap} emissive={new THREE.Color(0xffcea5)} emissiveMap={emisiveMap} envMapIntensity={0} ref={myMaterial}/>
 			</mesh>
 		
 	)
@@ -95,20 +105,41 @@ function GroupLight (props: JSX.IntrinsicElements['group']) {
 
 	return (
 		<group position={[ 2, -4, 4 ]} ref={grouplight}>
-			<mesh position={[ 0, -10, 0 ]}>
-				<sphereGeometry args={[ 1, 50, 50 ]} />
-				<meshBasicMaterial color={'red'} />
-			</mesh>
+			
 			<pointLight position={[ 0, 10, 10 ]} intensity={0.4} ref={light} />
 		</group>
 	)
 }
 
+//add inside light group to trackit
+/*
+<mesh position={[ 0, 10, 10 ]}>
+				<sphereGeometry args={[ 1, 50, 50 ]} />
+				<meshBasicMaterial color={'red'} />
+			</mesh>
+*/
+
+
+
+
 export default function Nav () {
 	/* eslint-disable */
-
+	
 	return (
 		<Canvas style={{ width: '100%', height: '100%' }}>
+			<Text
+		position={[-2,5.4,0]}
+      color={'#ffffff'}
+      fontSize={.5}
+      maxWidth={200}
+      lineHeight={1}
+      letterSpacing={0.02}
+      textAlign={'left'}
+      font="https://fonts.gstatic.com/s/raleway/v14/1Ptrg8zYS_SKggPNwK4vaqI.woff"
+      anchorX="center"
+      anchorY="middle"
+    >MoonRabbit
+  </Text>	
 			<PerspectiveCamera
 				makeDefault
 				position={[ -2, 3, 10 ]}
@@ -117,104 +148,14 @@ export default function Nav () {
 				near={1}
 				far={65536}
 			/>
-
+ 		
 			<Moon />
 			<Stars />
 			<ambientLight intensity={0.009} />
 			<GroupLight />
+			
+			
 		</Canvas>
 	)
 }
 
-/*
-
-import * as THREE from 'three'
-import React, { useState, useRef, useEffect, Suspense } from 'react'
-import styled from 'styled-components'
-import { Canvas, useFrame, useLoader } from '@react-three/fiber'
-import { PerspectiveCamera } from '@react-three/drei'
-import { TextureLoader } from 'three/src/loaders/TextureLoader'
-import { group } from 'console'
-import {useTextures} from './useTextures'
-
-
-
-
-
-function Moon (props: JSX.IntrinsicElements['mesh']) {
-	const mesh = useRef<THREE.Mesh>(null!)
-	const moonOrbit = useRef<THREE.Group>(null!)
-	const moonGroup = useRef<THREE.Group>(null!)
-	const {mapSize,maps}=useTextures()
-	
-	useFrame((state, delta) => {
-		mesh.current.rotation.y += 0.0004
-		moonOrbit.current.rotation.y += 0.01
-		//	mesh.current.rotation.y += 0.0004
-	})
-	return (
-		<group ref={moonOrbit} position={[ 0, 0, -50 ]}>
-			<group ref={moonGroup}  position={[ 15, 0, -10 ]}>
-			<mesh {...props} ref={mesh}>
-				<icosahedronGeometry args={[ 4, 20 ]} />
-				
-					<meshStandardMaterial color='red' />
-				
-			</mesh>
-			</group>
-		</group>
-	)
-}
-
-function GroupLight (props: JSX.IntrinsicElements['group']) {
-	const mesh = useRef<THREE.Group>(null!)
-	const light = useRef<THREE.Light>(null!)
-	const grouplight = useRef<THREE.Group>(null!)
-	
-	useFrame((state, delta) => {
-		grouplight.current.rotation.y -= 0.0009
-		grouplight.current.rotation.x -= 0.0009
-	})
-
-	return (
-		<group position={[ 1.2, -4, 4 ]} ref={grouplight}>
-
-			
-			<mesh >
-				<sphereGeometry args={[ 1, 50, 50 ]} />
-				<meshBasicMaterial color={'black'} />
-			</mesh>
-			<pointLight position={[ 0, 10, 10 ]} intensity={0.4} ref={light} />
-		</group>
-	)
-}
-
-export default function Nav () {
-	
-
-	return (
-		<Canvas style={{ width: '100%', height: '100%' }}>
-			<PerspectiveCamera
-				makeDefault
-				position={[ 0, 0, 10 ]}
-				fov={35}
-				aspect={window.innerWidth / window.innerHeight}
-				near={1}
-				far={65536}
-			/>
-			<color attach='background' args={[ 'black' ]} />
-		
-			<Suspense fallback={null}>
-				<Moon />
-			
-			</Suspense>
-			<ambientLight intensity={0.015} />
-			<GroupLight />
-		</Canvas>
-	)
-}
-
-
-
-
-*/

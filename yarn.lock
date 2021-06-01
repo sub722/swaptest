@@ -1304,6 +1304,16 @@
   dependencies:
     chalk "^4.0.0"
 
+"@compai/font-alata@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@compai/font-alata/-/font-alata-0.0.2.tgz#8dcf41917ddde46da3e36cf3e79a958262e24b9e"
+  integrity sha512-il7Vct77ruoqc8ChcwEyr8+g16tyNlWJzvm/fE11UVKQnuD4aPF0POVknn8RaFD5w7XJfxfxs9RUvDz+xCwMeA==
+
+"@compai/font-inter@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@compai/font-inter/-/font-inter-0.0.2.tgz#1b1fdf07ab22386671b17e82643b64d698bc87a8"
+  integrity sha512-ypdtmV9EzNgIYiqYYMdnjYvpRXwv2RAV7FSN2llQCaMMVNAsfjXI1+nngrD07nA11ydm5OOsQSKzngUBRlSCyg==
+
 "@crowdin/crowdin-api-client@^1.8.16":
   version "1.10.3"
   resolved "https://registry.yarnpkg.com/@crowdin/crowdin-api-client/-/crowdin-api-client-1.10.3.tgz#9be5ca4a98d507966442f41b6772d1b11c7cbed1"
