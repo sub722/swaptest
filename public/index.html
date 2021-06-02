@@ -37,6 +37,66 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="🥞 PancakeSwap - A next evolution DeFi exchange on Binance Smart Chan (BSC)" />
   </head>
+  <style>
+    body, html {
+  margin: 0;
+  padding: 0;
+  background: black;
+}
+
+
+.preload {
+  border: 10px solid white;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-animation: 2s spin linear infinite;
+  animation: 2s spin linear infinite;
+}
+
+.preloader1 {
+  width: 110px;
+  height: 110px;
+  border-top-color: black;
+  
+}
+.preloader2 {
+  width: 150px;
+  height: 150px;
+  border-bottom-color: black;
+}
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: translate(-50%, -50%) rotate(0deg);
+    -moz-transform: translate(-50%, -50%) rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: translate(-50%, -50%) rotate(360deg);
+    -moz-transform: translate(-50%, -50%) rotate(360deg);
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    -webkit-transform: translate(-50%, -50%) rotate(0deg);
+    -moz-transform: translate(-50%, -50%) rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: translate(-50%, -50%) rotate(360deg);
+    -moz-transform: translate(-50%, -50%) rotate(360deg);
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+  </style>
   <body>
     <!-- GTAG (noscript) -->
     <noscript>
@@ -51,6 +111,9 @@
     <audio id="bgMusic">
       <source src="swap.mp3" type="audio/mp3" />
     </audio>
-    <div id="root"></div>
+    <div id="root">
+      <div class="preload preloader1"></div>
+      <div class="preload preloader2"></div>
+    </div>
   </body>
 </html>
