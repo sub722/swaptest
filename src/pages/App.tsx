@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState,Suspense } from 'react'
+import React, { Suspense, useEffect, useState} from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import { Credentials, StringTranslations } from '@crowdin/crowdin-api-client'
