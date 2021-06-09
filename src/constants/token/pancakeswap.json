@@ -23,7 +23,7 @@
       "symbol": "MOONRABBIT",
       "address": "0x5Ac69C40bc7363EA7D98574C78F4f54DbecbD54B",
       "chainId": 56,
-      "decimals": 18,
+      "decimals": 9,
       "logoURI": "  https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/smartchain/assets/0x5Ac69C40bc7363EA7D98574C78F4f54DbecbD54B/logo.png"
     },
     {
