@@ -105,7 +105,8 @@ const Swap = () => {
 
   // Manage disabled trading pairs that should redirect users to V2
   useEffect(() => {
-    const disabledSwaps = ['BNB', 'BUSD', 'USDT', 'USDC', 'CAKE', 'BUNNY', 'ETH', 'BTCB', 'AUTO', 'XVS']
+    const disabledSwaps2 = ['BNB', 'BUSD', 'USDT', 'USDC', 'CAKE', 'BUNNY', 'ETH', 'BTCB', 'AUTO', 'XVS']
+    const disabledSwaps = ['0x0']
     const inputCurrencySymbol = currencies[Field.INPUT]?.symbol || ''
     const outputCurrencySymbol = currencies[Field.OUTPUT]?.symbol || ''
     const doesInputMatch = disabledSwaps.includes(inputCurrencySymbol)
@@ -115,7 +116,7 @@ const Swap = () => {
       // Prevent infinite re-render of modal with this condition
       if (!hasPoppedModal) {
         setHasPoppedModal(true)
-        onPresentV2ExchangeRedirectModalRef.current()
+        // onPresentV2ExchangeRedirectModalRef.current()
       }
 
       // Controls the swap buttons being disabled & renders a message

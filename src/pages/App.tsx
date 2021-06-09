@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { Credentials, StringTranslations } from '@crowdin/crowdin-api-client'
 import { LangType, useModal } from '@pancakeswap-libs/uikit'
 import VersionBar from 'components/VersionBar'
+import useAuth from 'hooks/useAuth'
+import { useWeb3React } from '@web3-react/core'
 import Popups from '../components/Popups'
 import Web3ReactManager from '../components/Web3ReactManager'
 import { RedirectDuplicateTokenIds, RedirectOldAddLiquidityPathStructure } from './AddLiquidity/redirects'
@@ -20,8 +22,10 @@ import { LanguageContext } from '../hooks/LanguageContext'
 import { TranslationsContext } from '../hooks/TranslationsContext'
 import UseV2ExchangeModal from '../components/UseV2ExchangeModal'
 import Background3D from '../components/BackgroundThreeD'
+import ConnectButton from '../components/Connectbutton'
 import Menu from '../components/Menu'
 import useGetDocumentTitlePrice from '../hooks/useGetDocumentTitlePrice'
+
 
 const AppWrapper = styled.div`
   display: flex;
@@ -67,6 +71,10 @@ export default function App() {
   const credentials: Credentials = {
     token: apiKey,
   }
+
+  const { account } = useWeb3React() 
+  const account2 = account===null ? undefined :account
+  const { login, logout } = useAuth()
 
   const stringTranslationsApi = new StringTranslations(credentials)
 
@@ -134,6 +142,8 @@ export default function App() {
     <Suspense fallback={null}>
       <HashRouter>
         <AppWrapper>
+          <ConnectButton account={account2} login={login} logout={logout}/>
+          
           <LanguageContext.Provider
             value={{
               selectedLanguage,
